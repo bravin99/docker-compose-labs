@@ -1,0 +1,14 @@
+# Example Caddy site block for this app.
+# Add this to your existing Caddyfile (e.g. /etc/caddy/Caddyfile) and reload Caddy.
+#
+# Replace "yourdomain.com" with your actual domain. Caddy will automatically
+# obtain and renew a TLS certificate for it.
+
+yourdomain.com {
+    reverse_proxy 127.0.0.1:8081
+}
+
+# After editing, reload Caddy:
+#   sudo systemctl reload caddy
+# or, if Caddy itself runs in Docker:
+#   docker exec <caddy_container> caddy reload --config /etc/caddy/Caddyfile

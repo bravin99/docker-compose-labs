@@ -1,0 +1,29 @@
+# Secrets — every app ships a .env.example instead
+.env
+.env.*
+!.env.example
+
+# Runtime data written by the apps (bind-mounted into containers)
+django_email_app/data/*
+!django_email_app/data/.gitkeep
+dotnet_email_app/data/
+noded/db.json
+
+# Python
+__pycache__/
+*.pyc
+staticfiles/
+
+# Node
+node_modules/
+
+# .NET
+bin/
+obj/
+.vs/
+*.user
+
+# Editors / OS
+.idea/
+.vscode/
+.DS_Store

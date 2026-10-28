@@ -1,0 +1,22 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: noded-app
+    restart: unless-stopped
+
+    ports:
+      - "127.0.0.1:3000:3000"
+
+    volumes:
+      - ./db.json:/usr/src/app/db.json
+
+    environment:
+      PORT: 3000
+      SMTP_HOST: ${SMTP_HOST:-smtp.example.com}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_SECURE: ${SMTP_SECURE:-false}
+      SMTP_USER: ${SMTP_USER:-username}
+      SMTP_PASS: ${SMTP_PASS:-password}
+      SMTP_FROM: ${SMTP_FROM:-"noded Portal <noreply@noded.local>"}

@@ -1,0 +1,25 @@
+@page "/login"
+@model EmailApp.Pages.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="card">
+    <h1>Login</h1>
+    <form method="post">
+        @Html.AntiForgeryToken()
+        <label asp-for="Input.Email">Email</label>
+        <input asp-for="Input.Email" type="email" required autofocus />
+        <label asp-for="Input.Password">Password</label>
+        <input asp-for="Input.Password" type="password" required />
+
+        <div asp-validation-summary="All" class="field-error"></div>
+
+        <button type="submit" class="btn btn-primary">Log In</button>
+    </form>
+    <div class="links">
+        <a href="/forgot-password">Forgot password?</a>
+        <span>&middot;</span>
+        <a href="/register">Create an account</a>
+    </div>
+</div>

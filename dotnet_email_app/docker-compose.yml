@@ -1,0 +1,27 @@
+services:
+  web:
+    build: .
+    container_name: dotnet_email_app
+    restart: unless-stopped
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__DefaultConnection=Data Source=/app/data/app.db
+
+      - Smtp__Host=${SMTP_HOST}
+      - Smtp__Port=${SMTP_PORT:-587}
+      - Smtp__EnableSsl=${SMTP_ENABLE_SSL:-true}
+      - Smtp__Username=${SMTP_USERNAME}
+      - Smtp__Password=${SMTP_PASSWORD}
+      - Smtp__FromAddress=${SMTP_FROM_ADDRESS}
+      - Smtp__FromName=${SMTP_FROM_NAME:-MyApp}
+    volumes:
+      # Holds both the SQLite database file and the ASP.NET Data Protection
+      # keys (so login sessions survive container restarts). A bind mount,
+      # so it survives `docker compose down -v` too.
+      - ./data:/app/data
+    ports:
+      # Bind only to localhost — Caddy (already running on the host) will
+      # reverse-proxy to this port. Do not expose 8081 publicly.
+      # Using 8081 to avoid clashing with other apps you may already have
+      # running on this host (Flask on 5000, Django on 8000, Laravel on 8080).
+      - "127.0.0.1:8081:8080"

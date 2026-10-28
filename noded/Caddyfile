@@ -1,0 +1,10 @@
+:80 {
+	# Reverse proxy setup to Node.js application container
+	reverse_proxy app:3000
+
+	# Enabling structured console logging
+	log {
+		output stdout
+		format console
+	}
+}

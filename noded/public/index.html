@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>noded | Secure Portal</title>
+  <!-- Google Fonts Outfit & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Background Glows for Glassmorphism -->
+  <div class="blob-bg blob-1"></div>
+  <div class="blob-bg blob-2"></div>
+  <div class="blob-bg blob-3"></div>
+
+  <!-- Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Main Container -->
+  <main class="app-container">
+    
+    <!-- AUTHENTICATION CARD -->
+    <div id="auth-section" class="card auth-card active">
+      <div id="auth-logo" class="brand-logo">
+        <div class="logo-icon"><i class="fa-solid fa-network-wired"></i></div>
+        <h1>noded</h1>
+        <p class="brand-tagline">Secure user management system</p>
+      </div>
+
+      <!-- Auth Navigation Tabs -->
+      <nav id="auth-tabs" class="auth-tabs">
+        <button id="tab-login" class="tab-btn active" onclick="switchTab('login')">
+          <i class="fa-solid fa-lock-open"></i> Login
+        </button>
+        <button id="tab-register" class="tab-btn" onclick="switchTab('register')">
+          <i class="fa-solid fa-user-plus"></i> Register
+        </button>
+        <button id="tab-reset" class="tab-btn" onclick="switchTab('reset')">
+          <i class="fa-solid fa-key"></i> Reset
+        </button>
+      </nav>
+
+      <!-- Forms Wrapper -->
+      <div class="form-container">
+        <!-- LOGIN FORM -->
+        <form id="login-form" class="auth-form active">
+          <div class="input-group">
+            <label for="login-identifier">Username or Email</label>
+            <div class="input-wrapper">
+              <i class="fa-regular fa-user input-icon"></i>
+              <input type="text" id="login-identifier" name="loginIdentifier" placeholder="Enter username or email" required autocomplete="username">
+            </div>
+          </div>
+          
+          <div class="input-group">
+            <label for="login-password">Password</label>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-lock input-icon"></i>
+              <input type="password" id="login-password" name="password" placeholder="Enter security password" required autocomplete="current-password">
+              <button type="button" class="password-toggle" onclick="togglePasswordVisibility('login-password')">
+                <i class="fa-regular fa-eye"></i>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">
+            <span>Login to Portal</span>
+            <i class="fa-solid fa-arrow-right-to-bracket"></i>
+          </button>
+        </form>
+
+        <!-- REGISTER FORM -->
+        <form id="register-form" class="auth-form">
+          <div class="input-group">
+            <label for="register-username">Username</label>
+            <div class="input-wrapper">
+              <i class="fa-regular fa-id-badge input-icon"></i>
+              <input type="text" id="register-username" name="username" placeholder="Choose a unique username" minlength="3" required>
+            </div>
+            <span class="input-tip">Minimum 3 characters, alphanumeric.</span>
+          </div>
+
+          <div class="input-group">
+            <label for="register-email">Email Address</label>
+            <div class="input-wrapper">
+              <i class="fa-regular fa-envelope input-icon"></i>
+              <input type="email" id="register-email" name="email" placeholder="you@domain.com" required>
+            </div>
+          </div>
+          
+          <div class="input-group">
+            <label for="register-password">Password</label>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-lock input-icon"></i>
+              <input type="password" id="register-password" name="password" placeholder="Choose a secure password" minlength="6" required autocomplete="new-password">
+              <button type="button" class="password-toggle" onclick="togglePasswordVisibility('register-password')">
+                <i class="fa-regular fa-eye"></i>
+              </button>
+            </div>
+            <span class="input-tip">Minimum 6 characters.</span>
+          </div>
+
+          <button type="submit" class="btn btn-primary">
+            <span>Create Account</span>
+            <i class="fa-solid fa-user-plus"></i>
+          </button>
+        </form>
+
+        <!-- PASSWORD RESET FORM -->
+        <form id="reset-form" class="auth-form">
+          <p class="form-desc text-center">Verify your handle and registry email to set a new password securely.</p>
+          
+          <div class="input-group">
+            <label for="reset-username">Registered Username</label>
+            <div class="input-wrapper">
+              <i class="fa-regular fa-id-badge input-icon"></i>
+              <input type="text" id="reset-username" name="username" placeholder="Enter your username" required>
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="reset-email">Registered Email Address</label>
+            <div class="input-wrapper">
+              <i class="fa-regular fa-envelope input-icon"></i>
+              <input type="email" id="reset-email" name="email" placeholder="Enter your email address" required>
+            </div>
+          </div>
+          
+          <div class="input-group">
+            <label for="reset-new-password">New Password</label>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-lock input-icon"></i>
+              <input type="password" id="reset-new-password" name="newPassword" placeholder="Enter your new password" minlength="6" required autocomplete="new-password">
+              <button type="button" class="password-toggle" onclick="togglePasswordVisibility('reset-new-password')">
+                <i class="fa-regular fa-eye"></i>
+              </button>
+            </div>
+            <span class="input-tip">Minimum 6 characters.</span>
+          </div>
+
+          <button type="submit" class="btn btn-primary">
+            <span>Reset credentials</span>
+            <i class="fa-solid fa-rotate"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- DASHBOARD CONTAINER -->
+    <div id="dashboard-section" class="card dashboard-card">
+      <header class="dashboard-header animate-slide-down">
+        <div class="header-brand">
+          <div class="dashboard-logo-icon"><i class="fa-solid fa-network-wired"></i></div>
+          <div>
+            <h1>noded <span class="badge">portal</span></h1>
+            <p>Node User Directory Directory</p>
+          </div>
+        </div>
+        <div class="header-actions">
+          <div class="user-greeting">
+            <span id="user-avatar" class="mini-avatar">U</span>
+            <span style="font-weight: 500;">Welcome, <span id="current-user-name" class="highlight-text">User</span>!</span>
+          </div>
+          <button id="logout-btn" class="btn btn-secondary" onclick="handleLogout()">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+            <span>Logout</span>
+          </button>
+        </div>
+      </header>
+
+      <section class="dashboard-content animate-fade-in">
+        <div class="dir-actions">
+          <div class="section-title">
+            <i class="fa-solid fa-users"></i>
+            <h2>Registered Users Directory</h2>
+          </div>
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            <input type="text" id="user-search" placeholder="Search directory..." oninput="filterUsers()">
+          </div>
+        </div>
+
+        <!-- Desktop View Directory Table -->
+        <div class="table-container">
+          <table class="user-table">
+            <thead>
+              <tr>
+                <th width="30%">User</th>
+                <th width="40%">Email Node Address</th>
+                <th width="30%">Registration Date</th>
+              </tr>
+            </thead>
+            <tbody id="user-list-body">
+              <!-- Dynamically populated -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Mobile Directory Cards -->
+        <div id="user-cards-grid" class="user-cards-grid">
+          <!-- Dynamically populated for small screens -->
+        </div>
+
+        <!-- Empty Directory State -->
+        <div id="no-users-view" class="empty-state hidden">
+          <i class="fa-solid fa-user-slash empty-icon"></i>
+          <h3>No users registered yet</h3>
+          <p>This is uncommon. Register some accounts to populate directory.</p>
+        </div>
+
+        <!-- SMTP Test Email Module -->
+        <div class="smtp-test-container">
+          <div class="section-title">
+            <i class="fa-solid fa-paper-plane"></i>
+            <h2>Send Test SMTP Communication</h2>
+          </div>
+          <p class="form-desc" style="margin-bottom: 12px;">Trigger a secure test communication transmission to ensure your SMTP environment endpoints and credentials are running successfully.</p>
+          <form id="email-test-form" class="email-test-form">
+            <div class="input-group">
+              <div class="input-wrapper">
+                <i class="fa-regular fa-envelope input-icon"></i>
+                <input type="email" id="test-email-to" name="to" placeholder="Enter recipient email address" required>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary" style="margin-top: 0; width: auto; min-width: 200px;">
+              <span>Transmit Test Mail</span>
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <footer class="app-footer">
+        <p>&copy; 2026 noded Inc. All security assets cryptographic.</p>
+      </footer>
+    </div>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MyApp</title>
+    <link rel="stylesheet" href="~/css/style.css" />
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-inner">
+            <a class="brand" href="/">MyApp</a>
+            <div class="nav-links">
+                @if (User.Identity?.IsAuthenticated == true)
+                {
+                    <span class="nav-user">Hi, @(User.FindFirst("DisplayName")?.Value ?? User.Identity.Name)</span>
+                    <a href="/dashboard">Dashboard</a>
+                    <form action="/logout" method="post" class="logout-form">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="link-btn">Logout</button>
+                    </form>
+                }
+                else
+                {
+                    <a href="/login">Login</a>
+                    <a href="/register">Register</a>
+                }
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+        @if (TempData["StatusMessage"] is string status && !string.IsNullOrEmpty(status))
+        {
+            <div class="flash-container">
+                <div class="flash flash-success">@status</div>
+            </div>
+        }
+        @if (TempData["ErrorMessage"] is string error && !string.IsNullOrEmpty(error))
+        {
+            <div class="flash-container">
+                <div class="flash flash-error">@error</div>
+            </div>
+        }
+
+        @RenderBody()
+    </main>
+</body>
+</html>

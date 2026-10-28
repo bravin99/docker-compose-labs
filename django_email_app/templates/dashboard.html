@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="card">
+    <div class="dash-header">
+        <h1>Dashboard</h1>
+        <form method="post" action="{% url 'send_test_email' %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-secondary">Send Test Email to Myself</button>
+        </form>
+    </div>
+    <p class="muted">Logged in as <strong>{{ user.username }}</strong> ({{ user.email }})</p>
+
+    <h2>Registered Users ({{ users|length }})</h2>
+    <table class="user-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Joined</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for u in users %}
+            <tr {% if u.id == user.id %}class="current-user-row"{% endif %}>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ u.username }}{% if u.id == user.id %} (you){% endif %}</td>
+                <td>{{ u.email }}</td>
+                <td>{{ u.date_joined|date:"Y-m-d H:i" }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

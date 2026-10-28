@@ -1,0 +1,16 @@
+# /etc/caddy/Caddyfile — one block per app.
+# Replace example.com with your domain. Caddy gets and renews the
+# HTTPS certificates automatically. Apply changes with:
+#   sudo systemctl reload caddy
+
+app.example.com {
+	reverse_proxy 127.0.0.1:8000   # django_email_app
+}
+
+node.example.com {
+	reverse_proxy 127.0.0.1:3000   # noded
+}
+
+dotnet.example.com {
+	reverse_proxy 127.0.0.1:8081   # dotnet_email_app
+}

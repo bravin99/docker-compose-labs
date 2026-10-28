@@ -1,0 +1,4 @@
+node_modules/
+.env
+# Live user data — copy db.json.example to db.json on the server
+db.json

@@ -1,0 +1,40 @@
+@page "/dashboard"
+@model EmailApp.Pages.DashboardModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="card">
+    <div class="dash-header">
+        <h1>Dashboard</h1>
+        <form method="post" asp-page-handler="SendTestEmail">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-secondary">Send Test Email to Myself</button>
+        </form>
+    </div>
+    <p class="muted">Logged in as <strong>@Model.CurrentUserName</strong> (@Model.CurrentUserEmail)</p>
+
+    <h2>Registered Users (@Model.Users.Count)</h2>
+    <table class="user-table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Joined</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.Users.Count; i++)
+            {
+                var u = Model.Users[i];
+                <tr class="@(u.Id == Model.CurrentUserId ? "current-user-row" : "")">
+                    <td>@(i + 1)</td>
+                    <td>@u.DisplayName@(u.Id == Model.CurrentUserId ? " (you)" : "")</td>
+                    <td>@u.Email</td>
+                    <td>@u.CreatedAt.ToString("yyyy-MM-dd HH:mm")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
