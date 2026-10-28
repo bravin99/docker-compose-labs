@@ -1,4 +1,4 @@
-# GDG Deploy Lab — Docker Compose on a VPS
+# GDG Deploy Lab - Docker Compose on a VPS
 
 Three small apps, each deployable with Docker Compose behind Caddy, on
 **AlmaLinux 9** or **Ubuntu 24.04**. Companion repo for the GDG session
