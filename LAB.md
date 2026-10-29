@@ -202,6 +202,7 @@ Compose comes as a Docker plugin: you type `docker compose` (with a space).
 ```bash
 server$ sudo dnf -y remove docker docker-client docker-client-latest docker-common \
           docker-latest docker-latest-logrotate docker-logrotate docker-engine podman runc
+#   "No match for argument" / "Nothing to do" is normal on a fresh server — continue.
 server$ sudo dnf -y install dnf-plugins-core
 server$ sudo dnf config-manager --add-repo https://download.docker.com/linux/rhel/docker-ce.repo
 server$ sudo dnf -y install docker-ce docker-ce-cli containerd.io \
