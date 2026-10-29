@@ -3,7 +3,7 @@
 # HTTPS certificates automatically. Apply changes with:
 #   sudo systemctl reload caddy
 
-app.example.com {
+django.example.com {
 	reverse_proxy 127.0.0.1:8000   # django_email_app
 }
 

@@ -6,7 +6,7 @@ Three small apps, each deployable with Docker Compose behind Caddy, on
 
 | App | Stack | Port on the server | Example domain |
 | --- | --- | --- | --- |
-| [`django_email_app`](django_email_app/) | Django + Gunicorn, SQLite | `127.0.0.1:8000` | `app.example.com` |
+| [`django_email_app`](django_email_app/) | Django + Gunicorn, SQLite | `127.0.0.1:8000` | `django.example.com` |
 | [`noded`](noded/) | Express + Nodemailer, JSON file | `127.0.0.1:3000` | `node.example.com` |
 | [`dotnet_email_app`](dotnet_email_app/) | ASP.NET Core 8, SQLite | `127.0.0.1:8081` | `dotnet.example.com` |
 
@@ -19,6 +19,9 @@ Visitor ──► Cloudflare (DNS, optional proxy) ──► Caddy :80/:443 ─�
                                                                  ├► 127.0.0.1:3000  noded
                                                                  └► 127.0.0.1:8081  dotnet_email_app
 ```
+
+> **Doing the GDG lab?** Follow [`LAB.md`](LAB.md) — a step-by-step walkthrough
+> from laptop to production, with a manual-upload track and a GitHub Actions track.
 
 ## Contents
 
@@ -234,8 +237,8 @@ Required values in `.env`:
 
 ```
 SECRET_KEY=<the random string>
-DJANGO_ALLOWED_HOSTS=app.example.com
-CSRF_TRUSTED_ORIGINS=https://app.example.com
+DJANGO_ALLOWED_HOSTS=django.example.com
+CSRF_TRUSTED_ORIGINS=https://django.example.com
 ```
 
 Fill in the `MAIL_*` values to send email (optional). Then:
@@ -315,7 +318,7 @@ Replace `/etc/caddy/Caddyfile` with the blocks for your apps — see
 [`Caddyfile.example`](Caddyfile.example):
 
 ```
-app.example.com {
+django.example.com {
 	reverse_proxy 127.0.0.1:8000
 }
 
@@ -335,7 +338,7 @@ sudo systemctl reload caddy
 ```
 
 Within a few seconds Caddy obtains certificates. Open
-`https://app.example.com/register/`, create an account and send a test email.
+`https://django.example.com/register/`, create an account and send a test email.
 
 Finally, switch the Cloudflare records to **Proxied (orange cloud)**.
 
